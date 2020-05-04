@@ -32,4 +32,21 @@ void matchDescriptors(std::vector<cv::KeyPoint> &kPtsSource,
                       std::string descriptorType, std::string matcherType,
                       std::string selectorType);
 
+// Stats helpr
+class StatsFactory {
+private:
+    StatsFactory() {}
+
+public:
+    static StatsFactory& instance();
+    void track(size_t run);
+    void updateDet(const std::string& det, double time_ms, const std::vector<cv::KeyPoint> &keypoints);
+    void updateDes(const std::string& des, double time_ms);
+    void updateMat(const std::vector<cv::DMatch> &matches);
+    void write(const std::string& output_path);
+private:
+    size_t curr_idx;
+    std::vector<Stats> storage;
+};
+
 #endif /* matching2D_hpp */
